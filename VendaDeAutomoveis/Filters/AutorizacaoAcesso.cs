@@ -13,7 +13,7 @@ namespace VendaDeAutomoveis.Filters
         {
             get
             {
-                return ((Logins)HttpContext.Current.Session["UsuarioLogado"]) != null;
+                return ((Login)HttpContext.Current.Session["UsuarioLogado"]) != null;
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿@model VendaDeAutomoveis.Entidades.Vendas
+﻿@model VendaDeAutomoveis.Entidades.Venda
 
 <br />
 <br />
@@ -17,7 +17,7 @@
     <br />
 
     @Html.LabelFor(m => m.IdProduto, "Modelo do Produto*")
-    @Html.DropDownListFor(m => m.IdProduto,
+    @Html.DropDownListFor(m => m.Veiculo.Id,
         new SelectList(ViewBag.Produto, "IdProduto", "ModeloVeiculo"), "Modelo do Produto",
             new { @class = "form-control" })
     @Html.ValidationMessageFor(m => m.IdProduto)

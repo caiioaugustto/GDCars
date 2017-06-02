@@ -6,14 +6,18 @@ using System.Web;
 
 namespace VendaDeAutomoveis.Entidades
 {
-    public class Entity : EntityUpload
+    public abstract class Entity : EntityUpload
     {
-        [Key]
-        public int Id { get; set; }
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        public Guid Id { get; set; }
 
         public DateTime Data_Cadastro { get; set; }
 
         [Required]
-        public double Valor { get; set; }
+        public decimal Valor { get; set; }
     }
 }

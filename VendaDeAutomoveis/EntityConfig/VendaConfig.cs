@@ -7,11 +7,11 @@ using VendaDeAutomoveis.Entidades;
 
 namespace VendaDeAutomoveis.EntityConfig
 {
-    public class VendaConfig : EntityTypeConfiguration<Vendas>
+    public class VendaConfig : EntityTypeConfiguration<Venda>
     {
         public VendaConfig()
         {
-            HasKey(v => v.IdVenda);
+            HasKey(v => v.Id);
 
             Property(v => v.DataCompra)
                 .HasColumnType("datetime");
@@ -33,7 +33,7 @@ namespace VendaDeAutomoveis.EntityConfig
                 .WithMany()
                 .Map(c => c.MapKey("IdCliente"));
 
-            HasRequired(c => c.Produto)
+            HasRequired(c => c.Veiculo)
                 .WithMany()
                 .Map(c => c.MapKey("IdProduto"));
 

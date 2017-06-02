@@ -1,8 +1,8 @@
-﻿using System.Web.Mvc;
-using VendaDeAutomoveis.DAO;
+﻿using System;
+using System.Web.Mvc;
 using VendaDeAutomoveis.Entidades;
-using VendaDeAutomoveis.Enum;
 using VendaDeAutomoveis.Filters;
+using VendaDeAutomoveis.Repository;
 using VendaDeAutomoveis.Services;
 
 namespace VendaDeAutomoveis.Controllers
@@ -12,11 +12,11 @@ namespace VendaDeAutomoveis.Controllers
     [RoutePrefix("acesso-ao-sistema")]
     public class LoginController : Controller
     {
-        private VendasContext db = new VendasContext();
-        private LoginDAO loginDAO;
-        public LoginController(LoginDAO loginDAO)
+        //private GDCarsContext db = new GDCarsContext();
+        private LoginRepository loginRepository;
+        public LoginController(LoginRepository loginRepository)
         {
-            this.loginDAO = loginDAO;
+            this.loginRepository = loginRepository;
         }
 
         public ActionResult Index()
@@ -30,7 +30,7 @@ namespace VendaDeAutomoveis.Controllers
             {
                 var senhaCripto = Criptografia.CriptografaMd5(senha);
 
-                var validarAcesso = loginDAO.Buscar(email, senhaCripto);
+                var validarAcesso = loginRepository.AutenticarAcesso(email, senhaCripto);
 
                 if (validarAcesso == null)
                 {
@@ -73,11 +73,12 @@ namespace VendaDeAutomoveis.Controllers
         [Route("novo-acesso")]
         [ClaimsAuthorize("CriarAcesso", "CA")]
         [ValidateAntiForgeryToken]
-        public ActionResult CriarAcesso([Bind(Include = "Id,Nome,SobreNome,Email,Senha,ConfirmarSenha")] Logins login)
+        public ActionResult CriarAcesso([Bind(Include = "Id,Nome,SobreNome,Email,Senha,ConfirmarSenha")] Login login)
         {
             if (ModelState.IsValid)
             {
-                var verificarExistenciaEmail = VerificarEmailExistente.ValidarEmailExistente(loginDAO, login);
+                var verificarExistenciaEmail = false;
+                //var verificarExistenciaEmail = VerificarEmailExistente.ValidarEmailExistente(loginDAO, login);
 
                 if (verificarExistenciaEmail)
                 {
@@ -87,8 +88,7 @@ namespace VendaDeAutomoveis.Controllers
                 else
                 {
                     login.Senha = Criptografia.CriptografaMd5(login.Senha);
-                    loginDAO.Adicionar(login);
-
+                    loginRepository.Adicionar(login);
                     return RedirectToAction("Index");
                 }
             }
@@ -101,14 +101,13 @@ namespace VendaDeAutomoveis.Controllers
         [ClaimsAuthorize("ListarAcesso", "LTA")]
         public ActionResult ListarAcesso()
         {
-            var usuarios = loginDAO.Listar();
-
+            var usuarios = loginRepository.ObterTodos();
             return View(usuarios);
         }
 
-        public void BloquearAcesso(int id)
+        public void BloquearAcesso(Guid id)
         {
-            loginDAO.BloquearAcesso(id);
+            loginRepository.BloquearAcesso(id);
         }
     }
 }

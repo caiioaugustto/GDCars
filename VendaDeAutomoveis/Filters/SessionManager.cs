@@ -8,7 +8,7 @@ namespace VendaDeAutomoveis.Filters
 {
     public class SessionManager
     {
-        public static Logins UsuarioLogado
+        public static Login UsuarioLogado
         {
             set
             {
@@ -17,7 +17,7 @@ namespace VendaDeAutomoveis.Filters
             }
             get
             {
-                return (Logins)HttpContext.Current.Session["UsuarioLogado"];
+                return (Login)HttpContext.Current.Session["UsuarioLogado"];
             }
 
         }
@@ -26,7 +26,7 @@ namespace VendaDeAutomoveis.Filters
         {
             get
             {
-                return ((Logins)HttpContext.Current.Session["UsuarioLogado"]) != null;
+                return ((Login)HttpContext.Current.Session["UsuarioLogado"]) != null;
             }
         }
     }

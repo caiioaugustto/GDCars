@@ -1,13 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using VendaDeAutomoveis.Enum;
 
 namespace VendaDeAutomoveis.Entidades
 {
-    public class Logins
+    public class Login
     {
+        public Login()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
-        public int IdLogin { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [Display(Name = "Nome")]
@@ -40,5 +45,15 @@ namespace VendaDeAutomoveis.Entidades
         [Required(ErrorMessage = "Informe qual é o perfil de acesso")]
         public NivelAcesso TipoAcesso { get; set; }
 
+    }
+
+    public enum NivelAcesso
+    {
+        [Display(Name = "Administrador")]
+        Admin = 1,
+        [Display(Name = "Ativo")]
+        Usuario = 2,
+        [Display(Name = "Bloqueado")]
+        Bloqueado = 3
     }
 }

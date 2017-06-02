@@ -5,7 +5,7 @@ using VendaDeAutomoveis.Entidades;
 
 namespace VendaDeAutomoveis.EntityConfig
 {
-    public class ClienteConfig : EntityTypeConfiguration<Clientes>
+    public class ClienteConfig : EntityTypeConfiguration<Cliente>
     {
         public ClienteConfig()
         {
@@ -18,9 +18,9 @@ namespace VendaDeAutomoveis.EntityConfig
 
             Property(c => c.CPF)
                 .IsRequired()
-                .HasMaxLength(11)
+                //.HasMaxLength(11)
                 .HasColumnType("int")
-                .IsFixedLength()
+                //.IsFixedLength()
                 .HasColumnAnnotation("Index", new IndexAnnotation(
                     new IndexAttribute("IX_CPF") { IsUnique = true }));
 
@@ -46,8 +46,8 @@ namespace VendaDeAutomoveis.EntityConfig
                 .IsRequired()
                 .HasColumnType("char");
 
-            HasOptional(c => c.Endereco)
-                .WithOptionalDependent(c => c.Cliente);  
+            //HasOptional(c => c.Endereco)
+            //    .WithOptionalDependent(c => c.Cliente);  
 
             //this.HasOptional(c => c.EnderecoNome)
             //    .WithMany(c => c.Cliente)

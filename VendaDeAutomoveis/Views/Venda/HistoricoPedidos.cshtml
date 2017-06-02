@@ -32,8 +32,8 @@
         @foreach (var m in Model.Vendas)
         {
             <tr>
-                <td>@m.Produto.ModeloVeiculo</td>
-                <td>@m.Produto.TipoVeiculo</td>
+                <td>@m.Veiculo.ModeloVeiculo</td>
+                <td>@m.Veiculo.TipoVeiculo</td>
                 <td>@m.Valor.ToString("c")</td>
                 <td>@m.TipoEntrega</td>
                 <td>@m.FormaDePagamento.ModeloFormaDePagamento</td>

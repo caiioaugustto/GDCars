@@ -1,11 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace VendaDeAutomoveis.Entidades
 {
     public class Endereco
     {
+        public Endereco()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string EnderecoNome { get; set; }
 
@@ -26,10 +32,10 @@ namespace VendaDeAutomoveis.Entidades
         [StringLength(15)]
         public string Estado { get; set; }
 
-        public virtual Clientes Cliente { get; set; }
+        public virtual Cliente Cliente { get; set; }
 
         [Required(ErrorMessage = "Informe o Cliente" )]
-        public int IdCliente { get; set; }
+        public Guid IdCliente { get; set; }
 
     }
 }

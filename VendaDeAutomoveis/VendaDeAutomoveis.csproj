@@ -39,6 +39,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DomainValidation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DomainValidation.1.0.0\lib\net45\DomainValidation.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
     </Reference>
@@ -58,6 +67,14 @@
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="SqlMapper, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlMapper.1.0.7\lib\net45\SqlMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="SqlMapper.Common, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlMapper.Common.1.0.7\lib\net45\SqlMapper.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -126,6 +143,16 @@
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Repository\ConnectionContext\Context\GDCarsContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GDCarsContext.edmx</DependentUpon>
+      <LastGenOutput>GDCarsContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Repository\ConnectionContext\Context\GDCarsContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GDCarsContext.edmx</DependentUpon>
+      <LastGenOutput>GDCarsContext.cs</LastGenOutput>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\autoNumeric.js" />
@@ -135,6 +162,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
+    <EntityDeploy Include="Repository\ConnectionContext\Context\GDCarsContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GDCarsContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Repository\ConnectionContext\Context\GDCarsContext.edmx.diagram">
+      <DependentUpon>GDCarsContext.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -204,21 +238,84 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\DomainToViewModelMappingProfile.cs" />
+    <Compile Include="AutoMapper\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PerformanceController.cs" />
-    <Compile Include="Controllers\ProdutoController.cs" />
+    <Compile Include="Controllers\VeiculoController.cs" />
     <Compile Include="Controllers\VendaController.cs" />
-    <Compile Include="DAO\ClienteDAO.cs" />
-    <Compile Include="DAO\EnderecoDAO.cs" />
-    <Compile Include="DAO\LoginDAO.cs" />
-    <Compile Include="DAO\PagamentosDAO.cs" />
-    <Compile Include="DAO\ProdutoDAO.cs" />
-    <Compile Include="DAO\VendaDAO.cs" />
-    <Compile Include="DAO\VendasContext.cs" />
+    <Compile Include="Repository\ClienteRepository.cs" />
+    <Compile Include="Repository\ConnectionContext\Adapters\ClienteAdapter.cs" />
+    <Compile Include="Repository\ConnectionContext\Adapters\EnderecoAdapter.cs" />
+    <Compile Include="Repository\ConnectionContext\Adapters\FormaPagamentoAdapter.cs" />
+    <Compile Include="Repository\ConnectionContext\Adapters\LoginAdapter.cs" />
+    <Compile Include="Repository\ConnectionContext\Adapters\VeiculoAdapter.cs" />
+    <Compile Include="Repository\ConnectionContext\Adapters\VendaAdappter.cs" />
+    <Compile Include="Repository\ConnectionContext\Context\GDCarsContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GDCarsContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDCarsContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDCarsContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GDCarsContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Bancos.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Clientes.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Cores_Externa.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Enderecos.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Formas_Pagamentos.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Logins.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Perfomances.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Rodas.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Uploads.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Veiculos.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\Context\GDC_Vendas.cs">
+      <DependentUpon>GDCarsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\ConnectionContext\GDCarsConnectionString.cs" />
+    <Compile Include="Repository\ConnectionContext\Interfaces\IFormasPagamentosRepository.cs" />
+    <Compile Include="Repository\ConnectionContext\Interfaces\ILoginRepository.cs" />
+    <Compile Include="Repository\ConnectionContext\Interfaces\IRepository.cs" />
+    <Compile Include="Repository\ConnectionContext\Interfaces\IVendasRepository.cs" />
+    <Compile Include="Repository\EnderecoRepository.cs" />
+    <Compile Include="Repository\LoginRepository.cs" />
+    <Compile Include="Repository\FormaPagamentoRepository.cs" />
+    <Compile Include="Repository\VeiculoRepository.cs" />
+    <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Repository\VendaRepository.cs" />
+    <Compile Include="Repository\GDCarsContext.cs" />
     <Compile Include="Entidades\Banco.cs" />
-    <Compile Include="Entidades\Clientes.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Cor.cs" />
     <Compile Include="Entidades\Endereco.cs" />
     <Compile Include="Entidades\Entity.cs" />
@@ -232,13 +329,8 @@
     <Compile Include="EntityConfig\EnderecoConfig.cs" />
     <Compile Include="EntityConfig\FormaPagamentoConfig.cs" />
     <Compile Include="EntityConfig\VendaConfig.cs" />
-    <Compile Include="Enum\ModelosDePagamento.cs" />
-    <Compile Include="Entidades\Produtos.cs" />
-    <Compile Include="Enum\NivelAcesso.cs" />
-    <Compile Include="Enum\TipoCliente.cs" />
-    <Compile Include="Enum\TipoEntrega.cs" />
-    <Compile Include="Enum\TipoVeiculo.cs" />
-    <Compile Include="Entidades\Vendas.cs" />
+    <Compile Include="Entidades\Veiculo.cs" />
+    <Compile Include="Entidades\Venda.cs" />
     <Compile Include="Factory\Base\Upload\UploadArquivoFactory.cs" />
     <Compile Include="Factory\EntidadesFactory\PagamentoAPrazo12xComJuros.cs" />
     <Compile Include="Factory\EntidadesFactory\PagamentoAPrazo12xSemJuros.cs" />
@@ -247,7 +339,6 @@
     <Compile Include="Factory\EntidadesFactory\PagamentoAVista.cs" />
     <Compile Include="Factory\Base\FormaDePagamentoFactory.cs" />
     <Compile Include="Factory\Base\IFormaDePagamento.cs" />
-    <Compile Include="Factory\EntidadesFactory\Upload\Upload.cs" />
     <Compile Include="Filters\AutorizacaoAcesso.cs" />
     <Compile Include="Filters\AutorizacaoFilterAttribute.cs" />
     <Compile Include="Filters\ClaimsAuthorizeAttribute.cs" />
@@ -255,16 +346,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705181510373_Tables.cs" />
-    <Compile Include="Migrations\201705181510373_Tables.Designer.cs">
-      <DependentUpon>201705181510373_Tables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\FormaDePagamentoModel.cs" />
     <Compile Include="Models\HistoricoPedidosModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Criptografia.cs" />
     <Compile Include="Services\VerificarEmailExistente.cs" />
+    <Compile Include="Specification\Clientes\ClienteDeveSerMaiorIdadeSpecification.cs" />
+    <Compile Include="Specification\Clientes\ClienteDeveTerCPFValidoSpecification.cs" />
+    <Compile Include="Specification\Clientes\ClienteDeveTerEmailValidoSpecification.cs" />
+    <Compile Include="Specification\ISpecification.cs" />
+    <Compile Include="Validation\Clientes\ClienteDeveTerEmailValidoValidation.cs" />
+    <Compile Include="Validation\Clientes\ClienteEstaConsistenteValidation.cs" />
+    <Compile Include="Validation\Clientes\CPFValidation.cs" />
+    <Compile Include="Validation\Clientes\EmailValidation.cs" />
+    <Compile Include="Validation\Clientes\MaiorIdadeValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -300,13 +395,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Factory\EntidadesFactory\Upload\" />
     <Folder Include="Factory\EntidadesFactory\Venda\" />
-    <Folder Include="Validation\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705181510373_Tables.resx">
-      <DependentUpon>201705181510373_Tables.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
