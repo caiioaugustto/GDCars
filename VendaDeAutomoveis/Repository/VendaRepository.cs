@@ -25,17 +25,15 @@ namespace VendaDeAutomoveis.Repository
 
         public IList<Venda> BuscarPorCliente(Guid? id)
         {
-            var sql = "SELECT * FROM GDC_Vendas where IdCliente = " + id;
+            var sql = "SELECT * FROM GDC_Vendas where IdCliente = @id ";
 
-            var e = _context.Database.Connection.Query<Venda>(sql).ToList();
-            
-            //var e = _context.Database.Connection.Query(sql,
-            //    param: new
-            //    {
-            //        id = id
-            //    });
+            var e = _context.Database.Connection.Query(sql,
+                param: new
+                {
+                    id = id
+                });
 
-            return e;
+            return e.FirstOrDefault();
         }
 
         public void Dispose()
@@ -87,7 +85,6 @@ namespace VendaDeAutomoveis.Repository
 
             return _context.Database.Connection.Query<Venda>(sql)
                 .OrderBy(c => c.DataCompra)
-                .ThenBy(c => c.Cliente.Nome)
                 .ToList();
         }
 

@@ -31,14 +31,14 @@ namespace VendaDeAutomoveis.Controllers
         public ActionResult FormularioCadastro()
         {
             ViewBag.Cliente = clienteRepository.ObterTodos();
-            ViewBag.Produto = clienteRepository.ObterTodos();
+            ViewBag.Veiculo = veiculoRepository.ObterTodos();
             ViewBag.FormaDePagamento = formaPagamentoRepository.ObterTodos();   
             return View();
         }
         public ActionResult AdicionarVenda(Venda venda)
         {
             ViewBag.Cliente = clienteRepository.ObterTodos();
-            ViewBag.Produto = veiculoRepository.ObterTodos();
+            ViewBag.Veiculo = veiculoRepository.ObterTodos();
 
             if (ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace VendaDeAutomoveis.Controllers
 
                     ModelState.AddModelError("TipoEntrega", " Para concluir a compra informe seu endereço na tela de clientes");
                     ViewBag.Cliente = clienteRepository.ObterTodos();
-                    ViewBag.Produto = clienteRepository.ObterTodos();
+                    ViewBag.Veiculo = clienteRepository.ObterTodos();
                     ViewBag.ExibirCampo = true;
                     return View("FormularioCadastro", venda);
                 }

@@ -13,7 +13,7 @@ namespace VendaDeAutomoveis.Repository
         {
         }
 
-        public void AdicionarEndereco(Endereco endereco)
+        public void Adicionar(Endereco endereco)
         {
             _context.Enderecos.Add(endereco.ToDbEntity());
             SaveChange();

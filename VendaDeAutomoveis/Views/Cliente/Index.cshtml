@@ -28,7 +28,7 @@
                 <td>@u.DataNascimento.ToString("dd/MM/yyyy")</td>
                 <td>@u.TipoDoCliente</td>
                 <td>@u.Email</td>
-                <td>@Html.ActionLink("Editar", "EditarCliente", new { IdCliente = u.IdCliente })</td>
+                <td>@Html.ActionLink("Editar", "EditarCliente", new { Id = u.IdCliente })</td>
             </tr>
         }
     </tbody>

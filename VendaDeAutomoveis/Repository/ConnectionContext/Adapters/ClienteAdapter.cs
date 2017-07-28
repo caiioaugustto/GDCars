@@ -9,7 +9,8 @@ namespace VendaDeAutomoveis.Repository.ConnectionContext.Adapters
     {
         public static Cliente ToDomain(this GDC_Clientes dbClientes)
         {
-            if (dbClientes == null) return null;
+            if (dbClientes == null)
+                return null;
             
             return new Cliente
             {
@@ -27,7 +28,7 @@ namespace VendaDeAutomoveis.Repository.ConnectionContext.Adapters
         {
             if (domain == null)
                 return null;
-            
+
             return new GDC_Clientes
             {
                 Id = domain.IdCliente.ToString(),

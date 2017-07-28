@@ -1,4 +1,8 @@
-﻿@model VendaDeAutomoveis.Entidades.Clientes
+﻿@{
+    ViewBag.Title = "Editar Cliente - Passo 1";
+}
+
+@model VendaDeAutomoveis.Entidades.Cliente
 
 <br />
 <br />
@@ -27,19 +31,13 @@
 
     <br />
 
-    @Html.LabelFor(u => u.TipoDoCliente, "Tipo do cliente*")
-    @Html.EnumDropDownListFor(m => m.TipoDoCliente, "Tipo do Cliente", new { @class = "form-control" })
-    @Html.ValidationMessageFor(u => u.TipoDoCliente)
-
-    <br />
-
     @Html.LabelFor(u => u.DataNascimento, "Data de Nascimento*")
     @Html.TextBoxFor(u => u.DataNascimento, new { @class = "form-control" })
     @Html.ValidationMessageFor(u => u.DataNascimento)
 
     <br />
 
-    @Html.LabelFor(u => u.Endereco, "Endereço")
+    @*@Html.LabelFor(u => u.Endereco, "Endereço")
     @Html.TextBoxFor(u => u.Endereco, new { @class = "form-control" })
     @Html.ValidationMessageFor(u => u.Endereco)
 
@@ -77,9 +75,7 @@
 
     @Html.LabelFor(u => u.Estado, "Estado")
     @Html.TextBoxFor(u => u.Estado, new { @class = "form-control" })
-    @Html.ValidationMessageFor(u => u.Estado)
-
-    <br />
+    @Html.ValidationMessageFor(u => u.Estado)*@
 
     @Html.LabelFor(u => u.Email, "E-mail")
     @Html.TextBoxFor(u => u.Email, new { @class = "form-control" })
@@ -88,5 +84,20 @@
     <br />
 
     <input type="submit" value="Salvar" />
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.maskedinput.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#rg").mask("99.999.999-*");
+            $("#dtnascimento").mask("99/99/9999");
+            //$("#cep").mask("99999-999");
+        });
+
+    </script>
 
 }

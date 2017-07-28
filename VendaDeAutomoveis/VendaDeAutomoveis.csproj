@@ -325,10 +325,6 @@
     <Compile Include="Entidades\Performance.cs" />
     <Compile Include="Entidades\Roda.cs" />
     <Compile Include="Entidades\Upload.cs" />
-    <Compile Include="EntityConfig\ClienteConfig.cs" />
-    <Compile Include="EntityConfig\EnderecoConfig.cs" />
-    <Compile Include="EntityConfig\FormaPagamentoConfig.cs" />
-    <Compile Include="EntityConfig\VendaConfig.cs" />
     <Compile Include="Entidades\Veiculo.cs" />
     <Compile Include="Entidades\Venda.cs" />
     <Compile Include="Factory\Base\Upload\UploadArquivoFactory.cs" />
@@ -350,7 +346,6 @@
     <Compile Include="Models\HistoricoPedidosModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Criptografia.cs" />
-    <Compile Include="Services\VerificarEmailExistente.cs" />
     <Compile Include="Specification\Clientes\ClienteDeveSerMaiorIdadeSpecification.cs" />
     <Compile Include="Specification\Clientes\ClienteDeveTerCPFValidoSpecification.cs" />
     <Compile Include="Specification\Clientes\ClienteDeveTerEmailValidoSpecification.cs" />
@@ -368,13 +363,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cliente\Index.cshtml" />
-    <Content Include="Views\Produto\FormularioCadastro.cshtml" />
-    <Content Include="Views\Produto\Index.cshtml" />
+    <Content Include="Views\Veiculo\FormularioCadastro.cshtml" />
+    <Content Include="Views\Veiculo\Index.cshtml" />
     <Content Include="Views\Venda\FormularioCadastro.cshtml" />
     <Content Include="Views\Venda\Index.cshtml" />
     <Content Include="Views\Venda\HistoricoPedidos.cshtml" />
     <Content Include="Views\Cliente\EditarCliente.cshtml" />
-    <Content Include="Views\Produto\EditarProduto.cshtml" />
+    <Content Include="Views\Veiculo\EditarProduto.cshtml" />
     <Content Include="Views\Venda\EditarClienteParcial.cshtml" />
     <Content Include="Views\Venda\_ParcialviewEndereco.cshtml" />
     <Content Include="Views\Venda\_ParcialViewFormaDePagamento.cshtml" />
@@ -382,8 +377,8 @@
     <Content Include="Views\Cliente\FormularioCadastro.cshtml" />
     <Content Include="Views\Login\CriarAcesso.cshtml" />
     <Content Include="Views\Login\ListarAcesso.cshtml" />
-    <Content Include="Views\Produto\_CadastroUpload.cshtml" />
-    <Content Include="Views\Produto\VerImagem.cshtml" />
+    <Content Include="Views\Veiculo\_CadastroUpload.cshtml" />
+    <Content Include="Views\Veiculo\VerImagem.cshtml" />
     <Content Include="Views\Performance\Index.cshtml" />
     <Content Include="Views\Cliente\CadastrarEndereco.cshtml" />
     <None Include="Web.Debug.config">

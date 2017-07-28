@@ -43,9 +43,9 @@ namespace VendaDeAutomoveis.EntityConfig
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
 
-            HasRequired(c => c.Cliente)
-                .WithMany()
-                .Map(c => c.MapKey("IdCliente"));
+            //HasRequired(c => c.Cliente)
+            //    .WithMany()
+            //    .Map(c => c.MapKey("IdCliente"));
 
             ToTable("GDC_Enderecos");
 

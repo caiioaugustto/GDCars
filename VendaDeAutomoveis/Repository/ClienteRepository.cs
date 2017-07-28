@@ -1,10 +1,10 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using VendaDeAutomoveis.DAO.ConnectionContext;
 using VendaDeAutomoveis.Entidades;
-using VendaDeAutomoveis.Repository.ConnectionContext.Adapters;
 using VendaDeAutomoveis.Repository.ConnectionContext.Context;
 using VendaDeAutomoveis.Repository.ConnectionContext.Interfaces;
 
@@ -37,12 +37,55 @@ namespace VendaDeAutomoveis.Repository
 
         public IList<Cliente> ObterTodos()
         {
-            var sql = "SELECT * FROM GDC_Clientes ";
+            using (SqlConnection connSql = new SqlConnection(connectionString))
+            {
+                SqlCommand cmdSql = new SqlCommand("Select * from GDC_Clientes", connSql);
 
-            return _context.Database.Connection.Query<Cliente>(sql)
-                .OrderBy(c => c.Nome)
-                .ThenBy(c => c.DataNascimento)
-                .ToList();
+                connSql.Open();
+
+                var clientes = new List<Cliente>();
+
+                using (SqlDataReader sdr = cmdSql.ExecuteReader())
+                {
+                    var cliente = new Cliente();
+
+                    if (sdr.Read())
+                    {
+                        cliente.IdCliente = Guid.Parse(sdr["Id"].ToString());
+                        cliente.Nome = (String)sdr["Nome"];
+                        cliente.CPF = Convert.ToString("CPF");
+                        cliente.RG = (String)sdr["RG"];
+                        cliente.Email = (String)sdr["Email"];
+                        cliente.TipoDoCliente = Cliente.TipoCliente.Comum;
+                        cliente.IdEndereco = Guid.Parse(sdr["IdEndereco"].ToString());
+                    }
+
+                    clientes.Add(cliente);
+                }
+
+                connSql.Close();
+
+                return clientes;
+            }
+
+            //List<Cliente> clientes = new List<Cliente>();
+
+            //using (var sqlConnection = new SqlConnection(connectionString))
+            //{
+            //    var queryClientes = sqlConnection.Query<Cliente>("Select * from GDC_Clientes");
+
+            //    foreach (Cliente cliente in queryClientes)
+            //        clientes.Add(cliente);
+            //}
+
+            //return clientes;
+
+            //var sql = "SELECT * FROM GDC_Clientes ";
+
+            //return _context.Database.Connection.Query<Cliente>(sql)
+            //    .OrderBy(c => c.Nome)
+            //    .ThenBy(c => c.DataNascimento)
+            //    .ToList();
         }
 
         public IQueryable<Cliente> Obter(Func<Cliente, bool> predicate)
@@ -50,9 +93,18 @@ namespace VendaDeAutomoveis.Repository
             throw new NotImplementedException();
         }
 
-        public void Atualizar(Cliente obj)
+        public void Atualizar(Guid idEndereco, Guid idCliente)
         {
-            _context.Clientes.Add(obj.ToDbEntity());
+            var sql = "update GDC_Clientes set IdEndereco = @idEndereco where Id = @idCliente ";
+
+            var e = _context.Database.Connection.Execute(sql,
+                param: new
+                {
+                    idEndereco = idEndereco,
+                    idCliente = idCliente
+                });
+
+            Salvar();
         }
 
         public void Salvar()
@@ -62,8 +114,8 @@ namespace VendaDeAutomoveis.Repository
 
         public void Adicionar(Cliente obj)
         {
-            _context.Clientes.Add(obj.ToDbEntity());
-            Salvar();
+            //_context.Clientes.Add(obj.ToDbEntity());
+            //Salvar();
         }
 
         public void Excluir(Func<Cliente, bool> predicate)
@@ -73,9 +125,19 @@ namespace VendaDeAutomoveis.Repository
 
         public void Editar(Cliente obj)
         {
-            _context.Clientes.Attach(obj.ToDbEntity());
-            var entry = _context.Entry(obj);
-            entry.State = System.Data.Entity.EntityState.Modified;
+            var sql = "update GDC_Clientes set Nome = @nome, RG = @rg, CPF = @cpf, DataNascimento = @datanascimento where Id = @idCliente ";
+
+            var e = _context.Database.Connection.Execute(sql,
+                param: new
+                {
+                    idCliente = obj.IdCliente,
+
+                    nome = obj.Nome,
+                    RG = obj.RG,
+                    CPF = obj.CPF,
+                    DataNascimento = obj.DataNascimento,
+                });
+
             Salvar();
         }
 
@@ -86,15 +148,14 @@ namespace VendaDeAutomoveis.Repository
 
         public Cliente ObterPorId(Guid id)
         {
-            var sql = "SELECT * FROM GDC_Clientes where Id = @id ";
+            var sql = "SELECT * FROM GDC_Clientes where Id = '@id' ";
 
-            var e = _context.Database.Connection.Query(sql,
-                param: new
-                {
-                    id = id
-                });
+            return _context.Database.Connection.Query(sql,
+                    param: new
+                    {
+                        id = id
+                    }).FirstOrDefault();
 
-            return e.FirstOrDefault();
         }
     }
 }

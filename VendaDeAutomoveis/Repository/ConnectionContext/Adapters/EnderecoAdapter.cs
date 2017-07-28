@@ -38,7 +38,6 @@ namespace VendaDeAutomoveis.Repository.ConnectionContext.Adapters
                 Endereco = domain.EnderecoNome,
                 Numero = domain.Numero,
                 Complemento = domain.Complemento,
-                CEP = Convert.ToInt32(domain.CEP),
                 Bairro = domain.Bairro,
                 Estado = domain.Estado,
                 Cidade = domain.Cidade,

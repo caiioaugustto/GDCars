@@ -35,15 +35,13 @@ namespace VendaDeAutomoveis.Controllers
             return View();
         }
 
-        //public ActionResult CadastrarEndereco()
-        //{
-        //    return View();
-        //}
-
         public ActionResult AdicionarEndereco(Endereco endereco)
         {
+            var idCliente = Guid.Parse("1bf329e7-1b55-438c-bbaf-348f01c5a7cb");
             if (ModelState.IsValid)
             {
+                enderecoRepository.Adicionar(endereco);
+                clienteRepository.Atualizar(endereco.Id, idCliente);
                 //enderecoDAO.AdicionarEndereco(endereco);
             }
 
@@ -59,8 +57,12 @@ namespace VendaDeAutomoveis.Controllers
                 if (cpfExistente == null)
                 {
                     clienteRepository.Adicionar(cliente);
-                    return View("CadastrarEndereco", new { IdCliente = cliente.IdCliente});
-                    //return RedirectToAction("Index");
+                    
+                    ViewBag.IdCliente = "1bf329e7-1b55-438c-bbaf-348f01c5a7cb";
+
+                    return RedirectToAction("CadastrarEndereco", cliente.IdCliente);
+
+                    //return View("CadastrarEndereco");
                 }
                 else
                 {
@@ -77,6 +79,10 @@ namespace VendaDeAutomoveis.Controllers
         public ActionResult EditarCliente(Guid id)
         {
             var cliente = clienteRepository.ObterPorId(id);
+
+            //if (cliente == null)
+            //    return Content("Erro");
+
             return View(cliente);
         }
 

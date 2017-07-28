@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using VendaDeAutomoveis.Entidades;
 
 namespace VendaDeAutomoveis.Repository.ConnectionContext.Interfaces
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Web;
@@ -72,9 +73,9 @@ namespace VendaDeAutomoveis.Controllers
 
         public ActionResult Index()
         {
-            return Content("Ok");
-            //IList<GDC_Veiculos> produto = produtoDAO.Listar();
-            //return View(produto);
+            IList<Veiculo> veiculos = veiculoRepository.ObterTodos();
+
+            return View(veiculos);
         }
 
         public ActionResult Teste()
